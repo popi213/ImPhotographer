@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anton Khmylev - Photographer</title>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -15,6 +15,46 @@
 
         .hero-text p {
             margin-top: 10px;
+        }
+
+        .about-slider {
+            max-width: 800px; 
+            margin: 0 auto; 
+            position: relative; 
+            overflow: hidden; 
+            border: 2px solid #ccc; 
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%; 
+            box-sizing: border-box; 
+        }
+
+            .slide img {
+                width: 100%; 
+            }
+
+        .button {
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 10px; 
+            cursor: pointer;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px; 
         }
     </style>
 </head>
@@ -44,16 +84,23 @@
         <div class="container">
             <h2>Обо мне</h2>
             <p>Привет! Я Антон, страстный фотограф с уникальным видением и любовью к искусству запечатления мгновений. Моя цель — создать визуальные истории, которые будут вызывать эмоции и сохранять воспоминания на долгие годы. Я специализируюсь на свадебной и портретной фотографии, но всегда открыт для новых творческих вызовов. Давайте вместе создадим что-то удивительное!</p>
+
             <div class="about-slider">
-                <!-- Контейнер для слайдера -->
-                <div class="slider-container">
-                    <div class="slide"><img src="slide1.jpg" alt="Слайд 1"></div>
-                    <div class="slide"><img src="slide2.jpg" alt="Слайд 2"></div>
-                    <div class="slide"><img src="slide3.jpg" alt="Слайд 3"></div>
+                <div class="slides">
+                    <div class="slide active">
+                        <img src="slide1.jpg" alt="Слайд 1">
+                    </div>
+                    <div class="slide">
+                        <img src="slide2.jpg" alt="Слайд 2">
+                    </div>
+                    <div class="slide">
+                        <img src="slide3.jpg" alt="Слайд 3">
+                    </div>
                 </div>
-                <button id="prevBtnAbout">Previous</button>
-                <button id="nextBtnAbout">Next</button>
+                <button class="button prev" onclick="prevSlide()">❮</button>
+                <button class="button next" onclick="nextSlide()">❯</button>
             </div>
+
             <p>Работаю в разных жанрах, включая пейзажную, портретную и предметную фотографию. Моя цель — передать эмоции и атмосферу каждого момента.</p>
         </div>
     </section>
@@ -121,6 +168,30 @@
         <p>Время, проведенное на сайте: <span id="timer">0</span> секунд</p>
     </div>
 
-    <script src="JS/script.js"></script>
+    <script>
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelector('.slides');
+            const totalSlides = document.querySelectorAll('.slide').length;
+            // Ограничиваем индекс
+            currentIndex = (index + totalSlides) % totalSlides;
+            // Сдвигаем слайды
+            slides.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
+        }
+
+        function nextSlide() {
+            showSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        // Показать первый слайд
+        showSlide(currentIndex);
+    </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
